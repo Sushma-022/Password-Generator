@@ -24,7 +24,8 @@ This tool goes beyond basic character randomization by offering a "Memorable Pas
 
 <img width="1350" height="863" alt="image" src="https://github.com/user-attachments/assets/28147584-80d6-4e69-a6e6-5114c46f3d73" />
 
-<img width="1404" height="860" alt="image" src="https://github.com/user-attachments/assets/5eeff64f-4857-4b4e-8068-463e2209fcdb" />
+<img width="1298" height="853" alt="image" src="https://github.com/user-attachments/assets/c3793bba-68dc-415e-9b28-f28f4754bdff" />
+
 
 ## 💻 How to Run Locally
 
