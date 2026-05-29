@@ -7,7 +7,6 @@ This tool goes beyond basic character randomization by offering custom character
 
 ## ✨ Features
 
-
 * **Real-Time Strength Meter:** Analyzes length and character variety on the fly, providing instant visual feedback (Red/Orange/Green) as you adjust settings.
 * **Custom Character Injection:** Add your own mandatory words or symbols into the randomized pool.
 * **1-Click Copy:** Seamlessly copy your newly generated password straight to your clipboard with modern web APIs.
