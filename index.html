@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Password Generator</title>
+    <style>
+        /* CSS: The styling for our app */
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 450px; 
+            margin: 50px auto; 
+            padding: 25px;
+            background-color: #f4f4f9;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+        }
+        h2 { text-align: center; margin-top: 0; }
+        .setting { margin-bottom: 15px; }
+        
+        /* Flexbox helps us put the input and copy button side-by-side */
+        .result-container { 
+            display: flex; 
+            gap: 10px; 
+            margin-bottom: 15px; 
+        }
+        
+        input[type="text"] { 
+            padding: 10px; 
+            font-size: 1.1em; 
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        /* Specific styling for the result box */
+        #result {
+            flex-grow: 1;
+            text-align: center;
+            background-color: #e9ecef;
+        }
+        
+        /* Specific styling for the custom chars box */
+        .custom-input { width: 100%; }
+
+        button { 
+            padding: 12px; 
+            background: #28a745; 
+            color: white; 
+            border: none; 
+            font-size: 1.1em;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            transition: 0.2s;
+        }
+        button:hover { background: #218838; }
+
+        /* Specific styling for the copy button */
+        #copy-btn {
+            width: auto;
+            background: #007bff;
+        }
+        #copy-btn:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <h2>Password Generator</h2>
+
+    <div class="result-container">
+        <input type="text" id="result" placeholder="Click generate..." readonly>
+        <button id="copy-btn" onclick="copyPassword()">Copy</button>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 20px; font-weight: bold;">
+        Strength: <span id="strength-text" style="color: gray;">None</span>
+    </div>
+
+    <div class="setting">
+        <label>Character Length: <strong id="length-val">9</strong></label>
+        <input type="range" id="length" min="4" max="32" value="9" 
+               oninput="document.getElementById('length-val').innerText = this.value; generatePassword();" 
+               style="width:100%;">
+    </div>
+
+    <div class="setting">
+        <label>Add Custom Characters (Optional):</label>
+        <input type="text" id="custom-chars" class="custom-input" placeholder="e.g., MyDog123">
+    </div>
+
+    <hr style="border: 0; border-top: 1px solid #ddd; margin: 20px 0;">
+
+    <div class="setting"><label><input type="checkbox" id="upper" checked> Include Uppercase (A-Z)</label></div>
+    <div class="setting"><label><input type="checkbox" id="lower" checked> Include Lowercase (a-z)</label></div>
+    <div class="setting"><label><input type="checkbox" id="numbers" checked> Include Numbers (0-9)</label></div>
+    <div class="setting"><label><input type="checkbox" id="symbols" checked> Include Symbols (!@#$)</label></div>
+
+    <button onclick="generatePassword()">Generate Password</button>
+
+    <script>
+        // JavaScript: The brain of the app
+        function generatePassword() {
+            const length = document.getElementById('length').value;
+            const hasUpper = document.getElementById('upper').checked;
+            const hasLower = document.getElementById('lower').checked;
+            const hasNumbers = document.getElementById('numbers').checked;
+            const hasSymbols = document.getElementById('symbols').checked;
+            const customChars = document.getElementById('custom-chars').value;
+
+            const upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const lowerChars = "abcdefghijklmnopqrstuvwxyz";
+            const numChars = "0123456789";
+            const symChars = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+
+            let charSet = "";
+            if (hasUpper) charSet += upperChars;
+            if (hasLower) charSet += lowerChars;
+            if (hasNumbers) charSet += numChars;
+            if (hasSymbols) charSet += symChars;
+            
+            // Add custom characters to the pool
+            charSet += customChars;
+
+            if (charSet === "") {
+                document.getElementById('result').value = "Select an option!";
+                evaluateStrength(""); // Reset strength if no options
+                return;
+            }
+
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charSet.length);
+                password += charSet[randomIndex];
+            }
+            
+            document.getElementById('result').value = password;
+            document.getElementById('copy-btn').innerText = "Copy";
+
+            // Trigger the strength check right after generating
+            evaluateStrength(password);
+        }
+
+        // New function to handle copying to the clipboard
+        function copyPassword() {
+            const passwordField = document.getElementById('result');
+            const copyBtn = document.getElementById('copy-btn');
+
+            if (passwordField.value === "" || passwordField.value === "Select an option!") {
+                return; 
+            }
+
+            navigator.clipboard.writeText(passwordField.value).then(() => {
+                copyBtn.innerText = "Copied!";
+                setTimeout(() => {
+                    copyBtn.innerText = "Copy";
+                }, 2000); 
+            });
+        }
+
+        // Calculates and updates the strength color
+        function evaluateStrength(password) {
+            let score = 0;
+            const strengthText = document.getElementById('strength-text');
+
+            if (!password || password === "Select an option!") {
+                strengthText.innerText = "None";
+                strengthText.style.color = "gray";
+                return;
+            }
+
+            if (password.length >= 8) score += 1;
+            if (password.length >= 12) score += 1;
+
+            if (/[A-Z]/.test(password)) score += 1; 
+            if (/[0-9]/.test(password)) score += 1; 
+            if (/[^A-Za-z0-9]/.test(password)) score += 1; 
+
+            if (score < 3) {
+                strengthText.innerText = "Weak";
+                strengthText.style.color = "#dc3545"; 
+            } else if (score < 5) {
+                strengthText.innerText = "Medium";
+                strengthText.style.color = "#fd7e14"; 
+            } else {
+                strengthText.innerText = "Strong";
+                strengthText.style.color = "#28a745"; 
+            }
+        }
+    </script>
+
+</body>
+</html>
