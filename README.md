@@ -2,11 +2,12 @@
 
 A sleek, responsive, browser-based password generator built entirely with Vanilla JavaScript, HTML, and CSS. 
 
-This tool goes beyond basic character randomization by offering a "Memorable Passphrase" mode and real-time strength tracking, helping users create passwords that are incredibly secure against computers, but easy for humans to remember.
+This tool goes beyond basic character randomization by offering custom character injection and real-time strength tracking, helping users create passwords that are tailored to their needs while ensuring maximum security.
+
 
 ## ✨ Features
 
-* **Dual Generation Modes:** Choose between standard alphanumeric alphabet-soup (e.g., `u?N=FfH4dI.J`) or Memorable Passphrase mode (e.g., `ocean-robot-pizza`).
+
 * **Real-Time Strength Meter:** Analyzes length and character variety on the fly, providing instant visual feedback (Red/Orange/Green) as you adjust settings.
 * **Custom Character Injection:** Add your own mandatory words or symbols into the randomized pool.
 * **1-Click Copy:** Seamlessly copy your newly generated password straight to your clipboard with modern web APIs.
