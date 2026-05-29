@@ -19,7 +19,7 @@ This tool goes beyond basic character randomization by offering custom character
 * **CSS3** (Styling & Flexbox)
 * **Vanilla JavaScript** (Logic, DOM Manipulation, and Clipboard API)
 
-* **Screenshots**
+## Screenshots
   
 <img width="1421" height="843" alt="image" src="https://github.com/user-attachments/assets/3aff327d-a80a-48d2-974d-f30cb9838b68" />
 
